@@ -1,0 +1,6 @@
+/target/
+/Cargo.lock
+/venv
+/.idea/
+.python-version
+__pycache__

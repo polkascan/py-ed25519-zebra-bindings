@@ -1,0 +1,37 @@
+[package]
+name = "py-ed25519-zebra-bindings"
+description = "Python bindings for the ed25519-zebra RUST crate"
+authors=["Stichting Polkascan (Polkascan Foundation)"]
+version = "1.0.0"
+repository = "https://github.com/polkascan/py-ed25519-zebra-bindings"
+homepage = "https://github.com/polkascan/py-ed25519-zebra-bindings"
+license = "Apache-2.0"
+readme = "README.md"
+edition = "2018"
+
+[dependencies]
+ed25519-zebra = { version = "3.0.0", default-features = false}
+rand = "0.8.5"
+
+[lib]
+name = "ed25519_zebra"
+crate-type = ["cdylib"]
+
+[dependencies.pyo3]
+version = "0.11.1"
+features = ["extension-module"]
+
+[package.metadata.maturin]
+maintainer = "Stichting Polkascan (Polkascan Foundation)"
+maintainer-email = "legal@polkascan.org"
+classifier = [
+    "License :: OSI Approved :: Apache Software License",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.5",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10"
+]
