@@ -2,7 +2,7 @@
 name = "py-ed25519-zebra-bindings"
 description = "Python bindings for the ed25519-zebra RUST crate"
 authors=["Stichting Polkascan (Polkascan Foundation)"]
-version = "1.0.0"
+version = "1.0.1"
 repository = "https://github.com/polkascan/py-ed25519-zebra-bindings"
 homepage = "https://github.com/polkascan/py-ed25519-zebra-bindings"
 license = "Apache-2.0"
