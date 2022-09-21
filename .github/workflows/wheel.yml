@@ -95,7 +95,7 @@ jobs:
       CIBW_ARCHS_LINUX: "auto64"
       CIBW_ENVIRONMENT: 'PATH="$PATH:$HOME/.cargo/bin"'
       CIBW_BUILD: "*-musllinux_x86_64"
-      CIBW_SKIP: "cp27-* cp34-* cp35-* "
+      CIBW_SKIP: "cp27-* cp34-* cp35-* cp36-*"
 
     steps:
       - uses: actions/checkout@v3
@@ -121,7 +121,7 @@ jobs:
       CIBW_ARCHS_LINUX: "aarch64"
       CIBW_ENVIRONMENT: 'PATH="$PATH:$HOME/.cargo/bin"'
       CIBW_BUILD: "*-musllinux_aarch64 *-manylinux_aarch64"
-      CIBW_SKIP: "cp27-* cp34-* cp35-* "
+      CIBW_SKIP: "cp27-* cp34-* cp35-* cp36-*"
 
     steps:
       - uses: actions/checkout@v3
