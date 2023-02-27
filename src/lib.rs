@@ -24,7 +24,7 @@ use pyo3::prelude::*;
 use pyo3::types::{PyBytes, PyTuple};
 use pyo3::{wrap_pyfunction, IntoPy, PyObject, exceptions};
 use std::convert::TryFrom;
-use ed25519_zebra::{SigningKey, VerificationKey, Signature};
+use ::ed25519_zebra::{SigningKey, VerificationKey, Signature};
 
 pub struct PyKeypair([u8; 32], [u8; 32]);
 pub struct PySignature([u8; 64]);
@@ -40,12 +40,12 @@ pub const SEED_KEY_LENGTH: usize = 32;
 fn create_from_seed(seed: &[u8]) -> PyResult<Pair> {
 
 	if seed.len() != SEED_KEY_LENGTH {
-		return Err(exceptions::ValueError::py_err(
+		return Err(exceptions::PyValueError::new_err(
 			format!("Expected bytes of length {}, got {}", SEED_KEY_LENGTH, seed.len()))
 		)
 	}
 
-	let secret = SigningKey::try_from(seed).map_err(|err| exceptions::ValueError::py_err(format!("Invalid secret key: {}", err.to_string())))?;
+	let secret = SigningKey::try_from(seed).map_err(|err| exceptions::PyValueError::new_err(format!("Invalid secret key: {}", err.to_string())))?;
 	let public = VerificationKey::from(&secret);
 
 	Ok(Pair { secret, public })
@@ -61,7 +61,6 @@ fn create_from_seed(seed: &[u8]) -> PyResult<Pair> {
 ///
 /// A tuple containing the 32-byte secret key and 32-byte public key, in that order.
 #[pyfunction]
-#[text_signature = "(seed)"]
 pub fn ed_from_seed(seed: &[u8]) -> PyResult<PyKeypair> {
 
 	let keypair = match create_from_seed(seed) {
@@ -83,9 +82,8 @@ pub fn ed_from_seed(seed: &[u8]) -> PyResult<PyKeypair> {
 ///
 /// A 64-byte signature.
 #[pyfunction]
-#[text_signature = "(public, secret, message)"]
 pub fn ed_sign(secret: &[u8], message: &[u8]) -> PyResult<PySignature> {
-	let secret = SigningKey::try_from(secret).map_err(|err| exceptions::ValueError::py_err(format!("Invalid secret key: {}", err.to_string())))?;
+	let secret = SigningKey::try_from(secret).map_err(|err| exceptions::PyValueError::new_err(format!("Invalid secret key: {}", err.to_string())))?;
 	Ok(PySignature(secret.sign(message).into()))
 }
 
@@ -102,7 +100,6 @@ pub fn ed_sign(secret: &[u8], message: &[u8]) -> PyResult<PySignature> {
 ///
 /// True if the signature is valid, false otherwise.
 #[pyfunction]
-#[text_signature = "(signature, message, public)"]
 pub fn ed_verify(signature: &[u8], message: &[u8], public: &[u8]) -> bool {
 
 	let public_key = match VerificationKey::try_from(public.as_ref()) {
