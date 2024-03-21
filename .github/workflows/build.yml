@@ -24,16 +24,7 @@ jobs:
           profile: minimal
           default: true
       - name: Build
-        run: cargo build --release
-      - name: Build wheels - x86_64
-        uses: messense/maturin-action@v1
-        with:
-          target: x86_64
-          rust-toolchain: nightly-2024-02-04
-          args: -i python --release --out dist
-      - name: Install built wheel - x86_64
-        run: |
-          pip install py-ed25519-zebra-bindings --no-index --find-links dist --force-reinstall
+        run: cargo build --release --out dist
       - name: Build wheels - universal2
         if: ${{ matrix.python-version != '3.7' }}
         uses: messense/maturin-action@v1
