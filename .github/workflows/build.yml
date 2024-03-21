@@ -36,10 +36,10 @@ jobs:
         run: |
           pip install py-ed25519-zebra-bindings --no-index --find-links dist --force-reinstall
       - name: Upload wheels
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
-          name: wheels
-          path: dist
+          name: dist-wheels
+          path: dist/*.whl
   windows:
     runs-on: windows-latest
     strategy:
@@ -73,10 +73,10 @@ jobs:
         run: |
           pip install py-ed25519-zebra-bindings --no-index --find-links dist --force-reinstall
       - name: Upload wheels
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
-          name: wheels
-          path: dist
+          name: dist-wheels
+          path: dist/*.whl
 
   linux:
     runs-on: ubuntu-latest
@@ -105,10 +105,10 @@ jobs:
           manylinux: auto
           args: -i python${{ matrix.python-version }} --release --out dist
       - name: Upload wheels
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
-          name: wheels
-          path: dist
+          name: dist-wheels
+          path: dist/*.whl
 
   muslwheels_x86:
     name: Build musllinux wheels for x86
@@ -130,11 +130,11 @@ jobs:
         with:
           output-dir: dist
 
-
-      - uses: actions/upload-artifact@v3
+      - name: Upload wheels
+        uses: actions/upload-artifact@v4
         with:
-          name: wheels
-          path: dist
+          name: dist-wheels
+          path: dist/*.whl
 
   aarch64_wheels:
     name: Build wheels for aarch64 linux
@@ -162,10 +162,11 @@ jobs:
           output-dir: dist
 
 
-      - uses: actions/upload-artifact@v3
+      - name: Upload wheels
+        uses: actions/upload-artifact@v4
         with:
-          name: wheels
-          path: dist
+          name: dist-wheels
+          path: dist/*.whl
 
   build_sdist:
     name: Build source distribution
@@ -178,5 +179,5 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: wheels
+          name: dist-src
           path: dist/*.tar.gz
