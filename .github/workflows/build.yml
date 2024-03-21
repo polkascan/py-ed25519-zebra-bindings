@@ -23,7 +23,7 @@ jobs:
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: nightly
+          toolchain: nightly-2024-02-04
           profile: minimal
           default: true
       - name: Build
@@ -34,7 +34,7 @@ jobs:
         with:
           target: ${{ matrix.target }}
           args: -i python --release --out dist
-          rust-toolchain: nightly
+          rust-toolchain: nightly-2024-02-04
       - name: Install built wheel
         run: |
           pip install py-ed25519-zebra-bindings --no-index --find-links dist --force-reinstall
@@ -55,7 +55,7 @@ jobs:
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: nightly
+          toolchain: nightly-2024-02-04
           profile: minimal
           default: true
       - name: Build
@@ -67,7 +67,7 @@ jobs:
         uses: messense/maturin-action@v1
         with:
           target: ${{ matrix.target }}
-          rust-toolchain: nightly
+          rust-toolchain: nightly-2024-02-04
           manylinux: auto
           args: -i python${{ matrix.python-version }} --release --out dist
       - name: Upload wheels
@@ -82,7 +82,7 @@ jobs:
 
     env:
       CIBW_BUILD_VERBOSITY: 1
-      CIBW_BEFORE_ALL_LINUX: "curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly -y"
+      CIBW_BEFORE_ALL_LINUX: "curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly-2024-02-04 -y"
       CIBW_ARCHS_LINUX: "auto64"
       CIBW_ENVIRONMENT: 'PATH="$PATH:$HOME/.cargo/bin"'
       CIBW_BUILD: "*-musllinux_x86_64"
@@ -108,7 +108,7 @@ jobs:
 
     env:
       CIBW_BUILD_VERBOSITY: 1
-      CIBW_BEFORE_ALL_LINUX: "curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly -y"
+      CIBW_BEFORE_ALL_LINUX: "curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly-2024-02-04 -y"
       CIBW_ARCHS_LINUX: "aarch64"
       CIBW_ENVIRONMENT: 'PATH="$PATH:$HOME/.cargo/bin"'
       CIBW_BUILD: "*-musllinux_aarch64 *-manylinux_aarch64"
