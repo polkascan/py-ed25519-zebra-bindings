@@ -37,7 +37,7 @@ jobs:
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
-          name: dist-wheels
+          name: dist-wheels-mac-${{ matrix.python-version }}
           path: dist/*.whl
   windows:
     runs-on: windows-latest
@@ -74,7 +74,7 @@ jobs:
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
-          name: dist-wheels
+          name: dist-wheels-win-${{ matrix.python-version }}
           path: dist/*.whl
 
   linux:
@@ -106,7 +106,7 @@ jobs:
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
-          name: dist-wheels
+          name: dist-wheels-linux-${{ matrix.python-version }}
           path: dist/*.whl
 
   muslwheels_x86:
@@ -132,7 +132,7 @@ jobs:
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
-          name: dist-wheels
+          name: dist-wheels-musl
           path: dist/*.whl
 
   aarch64_wheels:
