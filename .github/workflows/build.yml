@@ -24,7 +24,7 @@ jobs:
           profile: minimal
           default: true
       - name: Build
-        run: cargo build --release --out dist
+        run: cargo build --release
       - name: Build wheels - universal2
         if: ${{ matrix.python-version != '3.7' }}
         uses: messense/maturin-action@v1
