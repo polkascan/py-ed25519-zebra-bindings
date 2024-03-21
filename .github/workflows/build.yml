@@ -75,7 +75,7 @@ jobs:
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
-          name: dist-wheels-win-${{ matrix.python-version }}
+          name: dist-wheels-win-${{ matrix.target }}-${{ matrix.python-version }}
           path: dist/*.whl
 
   linux:
