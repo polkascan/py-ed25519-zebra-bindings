@@ -24,9 +24,10 @@ classifiers = [
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11"
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12"
 ]
 
 [project.urls]
-repository = "https://github.com/polkascan/py-sr25519-bindings"
-homepage = "https://github.com/polkascan/py-sr25519-bindings"
+repository = "https://github.com/polkascan/py-ed25519-zebra-bindings"
+homepage = "https://github.com/polkascan/py-ed25519-zebra-bindings"
