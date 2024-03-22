@@ -135,37 +135,37 @@ jobs:
           name: dist-wheels-musl
           path: dist/*.whl
 
-  aarch64_wheels:
-    name: Build wheels for aarch64 linux
-    runs-on: ubuntu-latest
-
-    env:
-      CIBW_BUILD_VERBOSITY: 1
-      CIBW_BEFORE_ALL_LINUX: "curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly-2024-02-04 -y"
-      CIBW_ARCHS_LINUX: "aarch64"
-      CIBW_ENVIRONMENT: 'PATH="$PATH:$HOME/.cargo/bin"'
-      CIBW_BUILD: "*-musllinux_aarch64 *-manylinux_aarch64"
-      CIBW_SKIP: "cp27-* cp34-* cp35-* cp36-*"
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-        with:
-          platforms: arm64
-
-      - name: Build wheels
-        uses: pypa/cibuildwheel@v2.9.0
-        with:
-          output-dir: dist
-
-
-      - name: Upload wheels
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist-wheels
-          path: dist/*.whl
+#  aarch64_wheels:
+#    name: Build wheels for aarch64 linux
+#    runs-on: ubuntu-latest
+#
+#    env:
+#      CIBW_BUILD_VERBOSITY: 1
+#      CIBW_BEFORE_ALL_LINUX: "curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly-2024-02-04 -y"
+#      CIBW_ARCHS_LINUX: "aarch64"
+#      CIBW_ENVIRONMENT: 'PATH="$PATH:$HOME/.cargo/bin"'
+#      CIBW_BUILD: "*-musllinux_aarch64 *-manylinux_aarch64"
+#      CIBW_SKIP: "cp27-* cp34-* cp35-* cp36-*"
+#
+#    steps:
+#      - uses: actions/checkout@v3
+#
+#      - name: Set up QEMU
+#        uses: docker/setup-qemu-action@v3
+#        with:
+#          platforms: arm64
+#
+#      - name: Build wheels
+#        uses: pypa/cibuildwheel@v2.9.0
+#        with:
+#          output-dir: dist
+#
+#
+#      - name: Upload wheels
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: dist-wheels
+#          path: dist/*.whl
 
   build_sdist:
     name: Build source distribution
@@ -202,4 +202,4 @@ jobs:
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         run: |
           pip install --upgrade twine
-          twine upload --skip-existing *
+          twine upload --repository testpypi --skip-existing dist/*
