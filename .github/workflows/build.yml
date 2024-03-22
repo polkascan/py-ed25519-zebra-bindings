@@ -10,7 +10,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11', '3.12' ]
+        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11', '3.12']
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -23,8 +23,6 @@ jobs:
           target: aarch64-apple-darwin
           profile: minimal
           default: true
-#      - name: Build
-#        run: cargo build --release
       - name: Build wheels - universal2
         if: ${{ matrix.python-version != '3.7' }}
         uses: messense/maturin-action@v1
@@ -44,7 +42,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11', '3.12' ]
+        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11', '3.12']
         target: [x64, x86]
     steps:
       - uses: actions/checkout@v4
@@ -82,7 +80,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11', '3.12' ]
+        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11', '3.12']
         target: [x86_64, i686]
     steps:
       - uses: actions/checkout@v4
@@ -123,7 +121,7 @@ jobs:
       CIBW_SKIP: "cp27-* cp34-* cp35-* cp36-*"
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.9.0
