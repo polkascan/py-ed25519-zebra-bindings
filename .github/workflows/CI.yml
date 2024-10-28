@@ -42,7 +42,7 @@ jobs:
       - name: Run tests
         run: |
           pip install pytest
-          pytest ./test
+          pytest tests.py
   linux:
     runs-on: ${{ matrix.platform.runner }}
     needs: test
