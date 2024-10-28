@@ -71,6 +71,23 @@ pub fn ed_from_seed(seed: &[u8]) -> PyResult<PyKeypair> {
 	Ok(PyKeypair(keypair.secret.into(), keypair.public.into()))
 }
 
+/// Returns a public key for the given private key.
+///
+/// # Arguments
+///
+/// * `secret` - A 32 byte private key.
+///
+/// # Returns
+///
+/// 32-byte public key.
+#[pyfunction]
+pub fn ed_public_from_secret(secret: &[u8], py: Python) -> PyResult<Py<PyBytes>> {
+	let secret = SigningKey::try_from(secret).map_err(|err| exceptions::PyValueError::new_err(format!("Invalid secret key: {}", err.to_string())))?;
+	let public = VerificationKey::from(&secret);
+
+	Ok(PyBytes::new_bound(py, &public.as_ref()).into())
+}
+
 /// Signs a message with the given keypair, returning the resulting signature.
 ///
 /// # Arguments
@@ -118,28 +135,30 @@ pub fn ed_verify(signature: &[u8], message: &[u8], public: &[u8]) -> bool {
 
 /// This module is a Python module implemented in Rust.
 #[pymodule]
-fn ed25519_zebra(_py: Python<'_>, m: &PyModule) -> PyResult<()> {
-    m.add_wrapped(wrap_pyfunction!(ed_from_seed))?;
-    m.add_wrapped(wrap_pyfunction!(ed_sign))?;
-    m.add_wrapped(wrap_pyfunction!(ed_verify))?;
-
+fn ed25519_zebra(m: &Bound<'_, PyModule>) -> PyResult<()> {
+    m.add_function(wrap_pyfunction!(ed_from_seed, m)?)?;
+    m.add_function(wrap_pyfunction!(ed_sign, m)?)?;
+    m.add_function(wrap_pyfunction!(ed_verify, m)?)?;
+    m.add_function(wrap_pyfunction!(ed_public_from_secret, m)?)?;
     Ok(())
 }
 
 // Convert Keypair object to a Python Keypair tuple
 impl IntoPy<PyObject> for PyKeypair {
     fn into_py(self, py: Python) -> PyObject {
-        let secret = PyBytes::new(py, &self.0);
-        let public = PyBytes::new(py, &self.1);
+        let secret = PyBytes::new_bound(py, &self.0);
+        let public = PyBytes::new_bound(py, &self.1);
 
-        PyTuple::new(py, vec![secret, public]).into_py(py)
+        PyTuple::new_bound(py, vec![secret, public]).into_py(py)
     }
 }
 
 // Convert Keypair object to a Python Keypair tuple
 impl IntoPy<PyObject> for PySignature {
     fn into_py(self, py: Python) -> PyObject {
-        let sig = PyBytes::new(py, &self.0);
+        // let sig = PyBytes::new(py, &self.0);
+        let sig = PyBytes::new_bound(py, &self.0);
+
         sig.into_py(py)
     }
 }
