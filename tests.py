@@ -69,6 +69,11 @@ class MyTestCase(unittest.TestCase):
         with self.assertRaises(ValueError):
             ed25519_zebra.ed_sign(bytes(1), b"test")
 
+    def test_public_from_private(self):
+        private_key = bytes(32)
+        public_key = ed25519_zebra.ed_public_from_secret(private_key)
+        self.assertEqual(bytes.fromhex("3b6a27bcceb6a42d62a3a8d02a6f0d73653215771de243a63ac048a18b59da29"), public_key)
+
 
 if __name__ == '__main__':
     unittest.main()
