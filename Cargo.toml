@@ -2,21 +2,20 @@
 name = "py-ed25519-zebra-bindings"
 description = "Python bindings for the ed25519-zebra RUST crate"
 authors=["Stichting Polkascan (Polkascan Foundation)"]
-version = "1.1.0"
+version = "1.2.0"
 repository = "https://github.com/polkascan/py-ed25519-zebra-bindings"
 homepage = "https://github.com/polkascan/py-ed25519-zebra-bindings"
 license = "Apache-2.0"
 readme = "README.md"
-edition = "2018"
+edition = "2021"
 
 [dependencies]
 ed25519-zebra = { version = "4.0.3", default-features = false}
-rand = "0.8.5"
 
 [lib]
 name = "ed25519_zebra"
 crate-type = ["cdylib"]
 
 [dependencies.pyo3]
-version = "0.22.5"
+version = "0.23.3"
 features = ["extension-module"]
